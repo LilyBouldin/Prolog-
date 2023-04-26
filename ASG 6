@@ -1,0 +1,52 @@
+Min([Min], Min). 
+
+min([H|T], Min) :-
+    min(T, Min1), 
+    Min is min(H, Min1). 
+
+max([Max], Max). 
+max([H|T], Max) :-
+    max(T, Max1), 
+    Max is max(H, Max1). 
+
+sum([], 0). 
+sum([H|T], SUm):-
+    sum(T, Sum1), 
+    Sum is H+ Sum1. 
+
+
+len([],0). 
+len([_IT], Len):-
+    len(T, Len1), 
+    Len is Len1 + 1. 
+% find the average 
+average(List, Avg):-
+    sum(List, SUm), 
+    len(List,Len), 
+    Avg is Sum/Len. 
+
+%find the mode
+
+mode(List, Mode) :- 
+    msort(List, Sorted), 
+    group_pairs_by_key(Sorted,Groups), 
+    keysort(Groups, SortedGroups), 
+    reverse(SortedGroups, [Mode|_]). 
+
+% calculate the median 
+
+median (List, Median) :- 
+    length(List, Len), 
+    len mod 2 =:= 1, 
+    N is (Len - 1) // 2, 
+    nth0 (N, List, Median). 
+
+
+median (List, Median) :- 
+    length (List, Len), 
+    Len mod 2 =:= 0, 
+    N1 is Len // 2 - 1, 
+    N2 is N1 + 1, 
+    ntho (N1, List, X1), 
+    nth0 (N2, List, X2), 
+    Median is (X1 + X2) / 2. 
